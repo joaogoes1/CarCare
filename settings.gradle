@@ -1,2 +1,6 @@
+include ':usecases'
+include ':core'
+include ':ui'
+include ':database'
 include ':app'
 rootProject.name = "CarCare"
