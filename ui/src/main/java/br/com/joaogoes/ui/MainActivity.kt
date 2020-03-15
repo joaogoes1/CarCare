@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                     with(revisionItem) {
                         Text("$itemName ")
                         Text("$currentRevisionKilometer km")
-                        VectorImage(bla, Color.Black)
+                        VectorImage(R.drawable.ic_arrow_right, Color.Black)
                         Text("$nextRevisionKilometer km")
                     }
                 }
