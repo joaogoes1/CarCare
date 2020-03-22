@@ -3,6 +3,11 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
       <module name="app" target="1.8" />
+      <module name="CarCare.app" target="1.8" />
+      <module name="CarCare.core" target="1.8" />
+      <module name="CarCare.database" target="1.8" />
+      <module name="CarCare.ui" target="1.8" />
+      <module name="CarCare.usecases" target="1.8" />
       <module name="core" target="1.8" />
       <module name="database" target="1.8" />
       <module name="database2" target="1.8" />

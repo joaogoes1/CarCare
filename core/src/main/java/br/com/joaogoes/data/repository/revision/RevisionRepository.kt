@@ -4,5 +4,6 @@ import br.com.joaogoes.model.RevisionItemModel
 import br.com.joaogoes.data.result.Result
 
 interface RevisionRepository {
-    fun getRevisionItem(): Result<List<RevisionItemModel>, RevisionRepositoryError>
+    suspend fun getRevisionItems(): Result<List<RevisionItemModel>, RevisionRepositoryError>
+    suspend fun saveRevisionItem(revisionItem: RevisionItemModel): Result<Unit, RevisionRepositoryError>
 }

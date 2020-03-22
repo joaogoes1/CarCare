@@ -5,6 +5,6 @@ import br.com.joaogoes.data.repository.revision.RevisionRepositoryError
 import br.com.joaogoes.data.result.Result
 
 interface LocalDataSource {
-    fun getRevisionItems(): Result<List<RevisionItemModel>, RevisionRepositoryError>
-    fun saveRevisionItem(revisionItem: RevisionItemModel): Result<Unit, RevisionRepositoryError>
+    suspend fun getRevisionItems(): Result<List<RevisionItemModel>, RevisionRepositoryError>
+    suspend fun saveRevisionItem(revisionItem: RevisionItemModel): Result<Unit, RevisionRepositoryError>
 }
