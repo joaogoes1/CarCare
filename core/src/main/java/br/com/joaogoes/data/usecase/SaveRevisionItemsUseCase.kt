@@ -4,6 +4,6 @@ import br.com.joaogoes.data.repository.revision.RevisionRepositoryError
 import br.com.joaogoes.data.result.Result
 import br.com.joaogoes.model.RevisionItemModel
 
-interface GetRevisionItemsUseCase {
-    suspend operator fun invoke(): Result<List<RevisionItemModel>, RevisionRepositoryError>
+interface SaveRevisionItemUseCase {
+    suspend operator fun invoke(revisionItem: RevisionItemModel): Result<Unit, RevisionRepositoryError>
 }

@@ -13,20 +13,20 @@ class AppLocalDataSource(
     private val mapper: RevisionItemMapper
 ) : LocalDataSource {
 
-    override fun getRevisionItems(): Result<List<RevisionItemModel>, RevisionRepositoryError> =
+    override suspend fun getRevisionItems(): Result<List<RevisionItemModel>, RevisionRepositoryError> =
         try {
             val items = revisionItemDAO.getAll().map { mapper.mapFromEntity(it) }
             Result.Success(items)
         } catch (e: Exception) {
-            Result.Error(RevisionRepositoryError.UnknownError)
+            Result.Error(RevisionRepositoryError.UnknownError("Generic Error"))
         }
 
-    override fun saveRevisionItem(revisionItem: RevisionItemModel): Result<Unit, RevisionRepositoryError> =
+    override suspend fun saveRevisionItem(revisionItem: RevisionItemModel): Result<Unit, RevisionRepositoryError> =
         try {
             val item = mapper.mapFromModel(revisionItem)
             revisionItemDAO.insert(item)
             Result.Success(Unit)
         } catch (e: Exception) {
-            Result.Error(RevisionRepositoryError.UnknownError)
+            Result.Error(RevisionRepositoryError.UnknownError("Generic Error"))
         }
 }

@@ -9,6 +9,6 @@ import br.com.joaogoes.data.usecase.GetRevisionItemsUseCase
 class GetRevisionItems(
     private val repository: RevisionRepository
 ): GetRevisionItemsUseCase {
-    override fun invoke(): Result<List<RevisionItemModel>, RevisionRepositoryError> =
-        repository.getRevisionItem()
+    override suspend operator fun invoke(): Result<List<RevisionItemModel>, RevisionRepositoryError> =
+        repository.getRevisionItems()
 }
