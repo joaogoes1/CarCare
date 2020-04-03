@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.compose.Composable
 import androidx.compose.MutableState
 import androidx.compose.state
-import androidx.fragment.app.DialogFragment
 import androidx.ui.core.Modifier
 import androidx.ui.core.Text
 import androidx.ui.core.TextField
@@ -21,49 +20,35 @@ import androidx.ui.material.Surface
 import androidx.ui.text.TextFieldValue
 import androidx.ui.text.TextStyle
 import androidx.ui.text.font.FontWeight
-import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import br.com.joaogoes.model.RevisionItemModel
+import br.com.joaogoes.ui.R
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class CustomDialog : DialogFragment() {
-
-    companion object {
-        fun newInstance(item: RevisionItemModel): CustomDialog {
-            val dialog = CustomDialog()
-            val args = Bundle()
-            args.putString("name", item.itemName)
-            args.putLong("currentKilometer", item.currentRevisionKilometer)
-            args.putSerializable("currentCalendar", item.currentRevisionDate)
-            args.putLong("currentKilometer", item.nextRevisionKilometer)
-            args.putSerializable("currentCalendar", item.nextRevisionDate)
-            dialog.arguments = args
-            return dialog
-        }
-
-        fun newInstance() = CustomDialog()
-    }
+class CustomDialog(
+    val saveRevisionItem: (RevisionItemModel) -> Unit
+) : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        container?.setContent {
-            screen()
+        val view = inflater.inflate(R.layout.empty_layout, container, false)
+        (view as ViewGroup).setContent {
+            CustomDialogMethod()
         }
-        return container
+        return view
     }
 
     @Composable
-    fun screen() {
+    fun CustomDialogMethod() {
         val itemState: MutableState<TextFieldValue> = state { TextFieldValue() }
         val currentKilometerState: MutableState<TextFieldValue> = state { TextFieldValue() }
         val nextRevisionState: MutableState<TextFieldValue> = state { TextFieldValue() }
 
         Surface(
-            LayoutAlign.BottomCenter,
-            shape = RoundedCornerShape(24.dp, 24.dp, 0.dp, 0.dp),
             border = Border(0.2.dp, Color.Black)
         ) {
             Column(
@@ -83,15 +68,16 @@ class CustomDialog : DialogFragment() {
                         modifier = LayoutWidth.Fill,
                         arrangement = Arrangement.SpaceAround
                     ) {
-                        button("Cancel") {}
+                        button("Cancel", onClick = { dismiss() })
                         button("Confirmar") {
                             val newItem = RevisionItemModel(
-                                uid = 1,
+                                uid = -1,
                                 itemName = itemState.value.text,
                                 currentRevisionKilometer = currentKilometerState.value.text.toLong(),
                                 nextRevisionKilometer = nextRevisionState.value.text.toLong()
                             )
-                            // action(newItem)
+                            saveRevisionItem(newItem)
+                            dismiss()
                         }
                     }
                 }
@@ -100,7 +86,7 @@ class CustomDialog : DialogFragment() {
     }
 
     @Composable
-    fun button(text: String, onClick: () -> Unit) {
+    private fun button(text: String, onClick: () -> Unit) {
         Button(
             children = {
                 Text(
@@ -116,11 +102,11 @@ class CustomDialog : DialogFragment() {
     }
 
     @Composable
-    fun TitleText() {
+    private fun TitleText() {
         Container(LayoutWidth.Fill) {
             Text(
                 "Adicionar nova revisão",
-                LayoutAlign.Center,
+                LayoutAlign.TopCenter,
                 TextStyle(
                     color = Color.Black,
                     fontSize = 16.sp,
@@ -130,8 +116,9 @@ class CustomDialog : DialogFragment() {
         }
     }
 
+
     @Composable
-    fun ItemText(text: String) {
+    private fun ItemText(text: String) {
         Text(
             text,
             Modifier.None,
@@ -143,9 +130,9 @@ class CustomDialog : DialogFragment() {
     }
 
     @Composable
-    fun ItemTextField(state: MutableState<TextFieldValue>) {
+    private fun ItemTextField(state: MutableState<TextFieldValue>) {
         Surface(
-            LayoutAlign.BottomCenter,
+            LayoutAlign.Center,
             shape = RoundedCornerShape(8.dp, 8.dp, 8.dp, 8.dp),
             border = Border(0.2.dp, Color.Black)
         ) {
@@ -154,11 +141,5 @@ class CustomDialog : DialogFragment() {
                 onValueChange = { state.value = it }
             )
         }
-    }
-
-    @Preview
-    @Composable
-    fun preview() {
-        screen()
     }
 }

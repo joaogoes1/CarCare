@@ -1,9 +1,6 @@
 package br.com.joaogoes.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import br.com.joaogoes.database.entity.RevisionItemEntity
 
 @Dao
@@ -16,6 +13,9 @@ interface RevisionItemDAO {
 
     @Insert
     fun insert(revisionItem: RevisionItemEntity)
+
+    @Update
+    fun update(revisionItem: RevisionItemEntity)
 
     @Delete
     fun delete(user: RevisionItemEntity)

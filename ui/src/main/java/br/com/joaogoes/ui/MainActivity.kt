@@ -23,7 +23,6 @@ import androidx.ui.layout.LayoutPadding
 import androidx.ui.layout.Row
 import androidx.ui.material.*
 import androidx.ui.res.imageResource
-import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import br.com.joaogoes.model.RevisionItemModel
 import br.com.joaogoes.ui.dialog.CustomDialog
@@ -32,20 +31,28 @@ import org.koin.android.ext.android.inject
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by inject()
+    private var state: MainViewModel.ViewState? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
+            val dialogState by state { DrawerState.Closed }
+
             MaterialTheme {
                 Scaffold(
                     floatingActionButton = {
-                        FloatingActionButton(
-                            icon = imageResource(R.drawable.ic_plus),
-                            onClick = {
-                                showDialog()
-                            }
-                        )
+                        if (dialogState == DrawerState.Closed) {
+                            FloatingActionButton(
+                                icon = imageResource(R.drawable.ic_plus),
+                                onClick = {
+                                    val saveItemDialog = CustomDialog {
+                                        item -> viewModel.saveRevision(item)
+                                    }
+                                    saveItemDialog.show(supportFragmentManager, "MainActivity")
+                                }
+                            )
+                        }
                     },
                     topAppBar = {
                         TopAppBar(
@@ -55,20 +62,12 @@ class MainActivity : AppCompatActivity() {
                         )
                     },
                     bodyContent = {
-                        val state = observeState<MainViewModel.ViewState>(viewModel.viewState)
-                        buildLayout(state)
+                        state = observeState<MainViewModel.ViewState>(viewModel.viewState)
+                        buildLayout(viewState = state)
                     }
                 )
             }
         }
-    }
-
-    private fun showDialog() {
-        val dialog = CustomDialog.newInstance()
-        dialog.show(
-            supportFragmentManager,
-            "MAINACTIVITY"
-        )
     }
 
     @Composable

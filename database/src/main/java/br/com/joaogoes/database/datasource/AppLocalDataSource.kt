@@ -1,10 +1,10 @@
 package br.com.joaogoes.database.datasource
 
 import br.com.joaogoes.data.datasource.LocalDataSource
-import br.com.joaogoes.database.mapper.RevisionItemMapper
 import br.com.joaogoes.data.repository.revision.RevisionRepositoryError
 import br.com.joaogoes.data.result.Result
 import br.com.joaogoes.database.dao.RevisionItemDAO
+import br.com.joaogoes.database.mapper.RevisionItemMapper
 import br.com.joaogoes.model.RevisionItemModel
 
 
@@ -24,7 +24,11 @@ class AppLocalDataSource(
     override suspend fun saveRevisionItem(revisionItem: RevisionItemModel): Result<Unit, RevisionRepositoryError> =
         try {
             val item = mapper.mapFromModel(revisionItem)
-            revisionItemDAO.insert(item)
+            if (item.uid == -1) {
+                revisionItemDAO.insert(item)
+            } else {
+                revisionItemDAO.update(item)
+            }
             Result.Success(Unit)
         } catch (e: Exception) {
             Result.Error(RevisionRepositoryError.UnknownError("Generic Error"))
