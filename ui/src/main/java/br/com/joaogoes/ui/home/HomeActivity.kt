@@ -1,7 +1,6 @@
-package br.com.joaogoes.ui
+package br.com.joaogoes.ui.home
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
 import androidx.compose.onCommit
@@ -25,34 +24,33 @@ import androidx.ui.material.*
 import androidx.ui.res.imageResource
 import androidx.ui.unit.dp
 import br.com.joaogoes.model.RevisionItemModel
-import br.com.joaogoes.ui.dialog.CustomDialog
+import br.com.joaogoes.ui.GenericErrorScreen
+import br.com.joaogoes.ui.LoadingScreen
+import br.com.joaogoes.ui.R
+import br.com.joaogoes.ui.home.dialog.CustomDialog
 import org.koin.android.ext.android.inject
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
-    private val viewModel: MainViewModel by inject()
-    private var state: MainViewModel.ViewState? = null
+    private val viewModel: HomeViewModel by inject()
+    private var state: HomeViewState? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val dialogState by state { DrawerState.Closed }
-
             MaterialTheme {
                 Scaffold(
                     floatingActionButton = {
-                        if (dialogState == DrawerState.Closed) {
-                            FloatingActionButton(
-                                icon = imageResource(R.drawable.ic_plus),
-                                onClick = {
-                                    val saveItemDialog = CustomDialog {
-                                        item -> viewModel.saveRevision(item)
-                                    }
-                                    saveItemDialog.show(supportFragmentManager, "MainActivity")
+                        FloatingActionButton(
+                            icon = imageResource(R.drawable.ic_plus),
+                            onClick = {
+                                val saveItemDialog = CustomDialog { item ->
+                                    viewModel.saveRevision(item)
                                 }
-                            )
-                        }
+                                saveItemDialog.show(supportFragmentManager, "HomeActivity")
+                            }
+                        )
                     },
                     topAppBar = {
                         TopAppBar(
@@ -62,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                         )
                     },
                     bodyContent = {
-                        state = observeState<MainViewModel.ViewState>(viewModel.viewState)
+                        state = observeState<HomeViewState>(viewModel.viewState)
                         buildLayout(viewState = state)
                     }
                 )
@@ -83,30 +81,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Composable
-    private fun buildLayout(viewState: MainViewModel.ViewState?) =
+    private fun buildLayout(viewState: HomeViewState?) =
         when (viewState) {
-            is MainViewModel.ViewState.Loading -> loadingView()
-            is MainViewModel.ViewState.Success -> kilometersScreen(viewState.revisionItems)
-            is MainViewModel.ViewState.Error -> errorView(viewState.message)
-            else -> errorView(message = "Unknown Error")
+            is HomeViewState.Loading -> LoadingScreen()
+            is HomeViewState.Success -> KilometersScreen(viewState.revisionItems)
+            else -> GenericErrorScreen()
         }
 
     @Composable
-    private fun errorView(message: String) {
-        Surface {
-            Text(message)
-        }
-    }
-
-    @Composable
-    private fun loadingView() {
-        Surface {
-            Text("Tá carregando")
-        }
-    }
-
-    @Composable
-    fun kilometersScreen(revisionList: List<RevisionItemModel>) =
+    fun KilometersScreen(revisionList: List<RevisionItemModel>) =
         Column {
             VerticalScroller(
                 modifier = LayoutPadding(32.dp)
@@ -121,10 +104,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-    fun showTestToast() {
-        Toast.makeText(baseContext, "Funcionou!", Toast.LENGTH_LONG).show()
-    }
 
     @Composable
     fun revisionListItem(revisionItem: RevisionItemModel) {

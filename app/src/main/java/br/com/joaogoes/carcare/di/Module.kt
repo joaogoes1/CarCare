@@ -8,7 +8,7 @@ import br.com.joaogoes.data.usecase.GetRevisionItemsUseCase
 import br.com.joaogoes.data.usecase.SaveRevisionItemUseCase
 import br.com.joaogoes.database.AppDatabase
 import br.com.joaogoes.database.datasource.AppLocalDataSource
-import br.com.joaogoes.ui.MainViewModel
+import br.com.joaogoes.ui.home.HomeViewModel
 import br.com.joaogoes.usecases.GetRevisionItems
 import br.com.joaogoes.usecases.SaveRevisionItem
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -22,5 +22,5 @@ val appModule = module {
     single<RevisionRepository> { AppRevisionRepository(get()) }
     single<GetRevisionItemsUseCase> { GetRevisionItems(get()) }
     single<SaveRevisionItemUseCase> { SaveRevisionItem(get()) }
-    viewModel { MainViewModel(get(), get()) }
+    viewModel { HomeViewModel(get(), get()) }
 }

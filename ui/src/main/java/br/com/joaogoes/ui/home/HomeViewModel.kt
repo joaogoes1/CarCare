@@ -1,4 +1,4 @@
-package br.com.joaogoes.ui
+package br.com.joaogoes.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,32 +8,26 @@ import br.com.joaogoes.data.usecase.SaveRevisionItemUseCase
 import br.com.joaogoes.model.RevisionItemModel
 import kotlinx.coroutines.*
 
-class MainViewModel(
+class HomeViewModel(
     private val getRevisionItems: GetRevisionItemsUseCase,
     private val saveRevisionItem: SaveRevisionItemUseCase
 ) : ViewModel() {
 
-    val viewState = MutableLiveData<ViewState>()
-
-    sealed class ViewState {
-        object Loading : ViewState()
-        class Error(val message: String) : ViewState()
-        class Success(val revisionItems: List<RevisionItemModel>) : ViewState()
-    }
+    val viewState = MutableLiveData<HomeViewState>()
 
     init {
         getRevisions()
     }
 
     fun getRevisions() {
-        viewState.postValue(ViewState.Loading)
+        viewState.postValue(HomeViewState.Loading)
         GlobalScope.launch {
             delay(2000)
             withContext(Dispatchers.IO) {
                 when (val result = getRevisionItems()) {
                     is Result.Success ->
-                        viewState.postValue(ViewState.Success(result.value))
-                    is Result.Error -> viewState.postValue(ViewState.Error(result.value.message))
+                        viewState.postValue(HomeViewState.Success(result.value))
+                    is Result.Error -> viewState.postValue(HomeViewState.Error)
                 }
             }
         }

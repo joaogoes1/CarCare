@@ -1,4 +1,4 @@
-package br.com.joaogoes.ui.dialog
+package br.com.joaogoes.ui.home.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
