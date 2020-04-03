@@ -157,9 +157,3 @@ class CustomDialog(
         }
     }
 }
-
-@Preview
-@Composable
-fun preview() {
-    CustomDialog {}.CustomDialogMethod()
-}
