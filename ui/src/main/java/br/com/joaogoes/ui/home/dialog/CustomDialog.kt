@@ -12,14 +12,18 @@ import androidx.ui.core.Text
 import androidx.ui.core.TextField
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Border
+import androidx.ui.foundation.DrawBorder
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
+import androidx.ui.graphics.SolidColor
+import androidx.ui.input.KeyboardType
 import androidx.ui.layout.*
 import androidx.ui.material.Button
 import androidx.ui.material.Surface
 import androidx.ui.text.TextFieldValue
 import androidx.ui.text.TextStyle
 import androidx.ui.text.font.FontWeight
+import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import br.com.joaogoes.model.RevisionItemModel
@@ -58,9 +62,9 @@ class CustomDialog(
                 ItemText("Item:")
                 ItemTextField(itemState)
                 ItemText("Current Kilometer:")
-                ItemTextField(currentKilometerState)
+                ItemTextField(currentKilometerState, KeyboardType.Number)
                 ItemText("Next revision:")
-                ItemTextField(nextRevisionState)
+                ItemTextField(nextRevisionState, KeyboardType.Number)
                 Container(
                     modifier = LayoutPadding(0.dp, 16.dp, 0.dp, 0.dp)
                 ) {
@@ -109,7 +113,7 @@ class CustomDialog(
                 LayoutAlign.TopCenter,
                 TextStyle(
                     color = Color.Black,
-                    fontSize = 16.sp,
+                    fontSize = 18.sp,
                     fontWeight = FontWeight.W500
                 )
             )
@@ -124,22 +128,38 @@ class CustomDialog(
             Modifier.None,
             TextStyle(
                 Color.DarkGray,
-                fontSize = 12.sp
+                fontSize = 14.sp
             )
         )
     }
 
     @Composable
-    private fun ItemTextField(state: MutableState<TextFieldValue>) {
-        Surface(
-            LayoutAlign.Center,
-            shape = RoundedCornerShape(8.dp, 8.dp, 8.dp, 8.dp),
-            border = Border(0.2.dp, Color.Black)
+    private fun ItemTextField(
+        state: MutableState<TextFieldValue>,
+        keyboardType: KeyboardType = KeyboardType.Text
+    ) {
+        Container(
+            modifier = DrawBorder(
+                size = 0.2.dp,
+                brush = SolidColor(Color.Black),
+                shape = RoundedCornerShape(8.dp)
+            )
         ) {
             TextField(
+                modifier = LayoutPadding(4.dp),
                 value = state.value,
-                onValueChange = { state.value = it }
+                textStyle = TextStyle(
+                    fontSize = 14.sp
+                ),
+                onValueChange = { state.value = it },
+                keyboardType = keyboardType
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun preview() {
+    CustomDialog {}.CustomDialogMethod()
 }
