@@ -1,5 +1,4 @@
 include(
-    ":usecases",
     ":core",
     ":ui",
     ":database",

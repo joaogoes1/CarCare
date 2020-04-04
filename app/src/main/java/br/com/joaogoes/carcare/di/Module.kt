@@ -9,8 +9,8 @@ import br.com.joaogoes.data.usecase.SaveRevisionItemUseCase
 import br.com.joaogoes.database.AppDatabase
 import br.com.joaogoes.database.datasource.AppLocalDataSource
 import br.com.joaogoes.ui.home.HomeViewModel
-import br.com.joaogoes.usecases.GetRevisionItems
-import br.com.joaogoes.usecases.SaveRevisionItem
+import br.com.joaogoes.data.usecase.GetRevisionItems
+import br.com.joaogoes.data.usecase.SaveRevisionItem
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

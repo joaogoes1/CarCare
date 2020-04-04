@@ -42,7 +42,6 @@ dependencies {
     implementation(project(Modules.database))
     implementation(project(Modules.ui))
     implementation(project(Modules.core))
-    implementation(project(Modules.usecases))
     testImplementation(TestLib.junit)
     androidTestImplementation(TestLib.extJunit)
     androidTestImplementation(TestLib.espresso)

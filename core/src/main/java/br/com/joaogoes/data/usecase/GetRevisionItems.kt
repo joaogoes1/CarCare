@@ -1,4 +1,4 @@
-package br.com.joaogoes.usecases
+package br.com.joaogoes.data.usecase
 
 import br.com.joaogoes.model.RevisionItemModel
 import br.com.joaogoes.data.repository.revision.RevisionRepository
