@@ -8,11 +8,8 @@ import androidx.compose.remember
 import androidx.compose.state
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.ui.core.Text
 import androidx.ui.core.setContent
-import androidx.ui.foundation.Border
-import androidx.ui.foundation.Image
-import androidx.ui.foundation.VerticalScroller
+import androidx.ui.foundation.*
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.SolidColor
@@ -38,19 +35,21 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         setContent {
             MaterialTheme {
                 Scaffold(
                     floatingActionButton = {
                         FloatingActionButton(
-                            icon = imageResource(R.drawable.ic_plus),
                             onClick = {
                                 val saveItemDialog = CustomDialog { item ->
                                     viewModel.saveRevision(item)
                                 }
                                 saveItemDialog.show(supportFragmentManager, "HomeActivity")
                             }
-                        )
+                        ) {
+                            Icon(imageResource(R.drawable.ic_plus))
+                        }
                     },
                     topAppBar = {
                         TopAppBar(

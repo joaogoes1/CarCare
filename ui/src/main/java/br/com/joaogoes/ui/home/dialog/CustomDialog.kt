@@ -1,18 +1,21 @@
 package br.com.joaogoes.ui.home.dialog
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.FrameLayout
 import androidx.compose.Composable
 import androidx.compose.MutableState
 import androidx.compose.state
 import androidx.ui.core.Modifier
-import androidx.ui.core.Text
-import androidx.ui.core.TextField
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Border
 import androidx.ui.foundation.DrawBorder
+import androidx.ui.foundation.Text
+import androidx.ui.foundation.TextField
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.SolidColor
@@ -23,11 +26,12 @@ import androidx.ui.material.Surface
 import androidx.ui.text.TextFieldValue
 import androidx.ui.text.TextStyle
 import androidx.ui.text.font.FontWeight
-import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import br.com.joaogoes.model.RevisionItemModel
 import br.com.joaogoes.ui.R
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class CustomDialog(
