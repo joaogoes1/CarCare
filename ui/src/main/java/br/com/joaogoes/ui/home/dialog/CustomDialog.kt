@@ -1,21 +1,15 @@
 package br.com.joaogoes.ui.home.dialog
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.FrameLayout
 import androidx.compose.Composable
 import androidx.compose.MutableState
 import androidx.compose.state
 import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
-import androidx.ui.foundation.Border
-import androidx.ui.foundation.DrawBorder
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.TextField
+import androidx.ui.foundation.*
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.SolidColor
@@ -30,8 +24,6 @@ import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import br.com.joaogoes.model.RevisionItemModel
 import br.com.joaogoes.ui.R
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class CustomDialog(
@@ -45,13 +37,13 @@ class CustomDialog(
     ): View? {
         val view = inflater.inflate(R.layout.empty_layout, container, false)
         (view as ViewGroup).setContent {
-            CustomDialogMethod()
+            CustomDialogScreen()
         }
         return view
     }
 
     @Composable
-    fun CustomDialogMethod() {
+    fun CustomDialogScreen() {
         val itemState: MutableState<TextFieldValue> = state { TextFieldValue() }
         val currentKilometerState: MutableState<TextFieldValue> = state { TextFieldValue() }
         val nextRevisionState: MutableState<TextFieldValue> = state { TextFieldValue() }
@@ -60,7 +52,7 @@ class CustomDialog(
             border = Border(0.2.dp, Color.Black)
         ) {
             Column(
-                modifier = LayoutPadding(8.dp)
+                modifier = Modifier.padding(8.dp)
             ) {
                 TitleText()
                 ItemText("Item:")
@@ -69,11 +61,11 @@ class CustomDialog(
                 ItemTextField(currentKilometerState, KeyboardType.Number)
                 ItemText("Next revision:")
                 ItemTextField(nextRevisionState, KeyboardType.Number)
-                Container(
-                    modifier = LayoutPadding(0.dp, 16.dp, 0.dp, 0.dp)
+                Box(
+                    modifier = Modifier.padding(0.dp, 16.dp, 0.dp, 0.dp)
                 ) {
                     Row(
-                        modifier = LayoutWidth.Fill,
+                        modifier = Modifier.fillMaxWidth(),
                         arrangement = Arrangement.SpaceAround
                     ) {
                         button("Cancel", onClick = { dismiss() })
@@ -111,7 +103,7 @@ class CustomDialog(
 
     @Composable
     private fun TitleText() {
-        Container(LayoutWidth.Fill) {
+        Box(Modifier.fillMaxWidth()) {
             Text(
                 "Adicionar nova revisão",
                 LayoutAlign.TopCenter,
@@ -142,7 +134,7 @@ class CustomDialog(
         state: MutableState<TextFieldValue>,
         keyboardType: KeyboardType = KeyboardType.Text
     ) {
-        Container(
+        Box(
             modifier = DrawBorder(
                 size = 0.2.dp,
                 brush = SolidColor(Color.Black),
@@ -150,7 +142,7 @@ class CustomDialog(
             )
         ) {
             TextField(
-                modifier = LayoutPadding(4.dp),
+                modifier = Modifier.padding(4.dp),
                 value = state.value,
                 textStyle = TextStyle(
                     fontSize = 14.sp
