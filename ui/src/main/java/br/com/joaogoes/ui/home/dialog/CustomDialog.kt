@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.Composable
 import androidx.compose.MutableState
 import androidx.compose.state
+import androidx.ui.core.Alignment
 import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
 import androidx.ui.foundation.*
@@ -17,7 +18,6 @@ import androidx.ui.input.KeyboardType
 import androidx.ui.layout.*
 import androidx.ui.material.Button
 import androidx.ui.material.Surface
-import androidx.ui.text.TextFieldValue
 import androidx.ui.text.TextStyle
 import androidx.ui.text.font.FontWeight
 import androidx.ui.unit.dp
@@ -66,7 +66,7 @@ class CustomDialog(
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        arrangement = Arrangement.SpaceAround
+                        horizontalArrangement = Arrangement.SpaceAround
                     ) {
                         button("Cancel", onClick = { dismiss() })
                         button("Confirmar") {
@@ -88,11 +88,11 @@ class CustomDialog(
     @Composable
     private fun button(text: String, onClick: () -> Unit) {
         Button(
-            children = {
+            text = {
                 Text(
-                    text,
-                    Modifier.None,
-                    TextStyle(
+                    text = text,
+                    modifier = Modifier,
+                    style = TextStyle(
                         Color.White
                     )
                 )
@@ -105,9 +105,9 @@ class CustomDialog(
     private fun TitleText() {
         Box(Modifier.fillMaxWidth()) {
             Text(
-                "Adicionar nova revisão",
-                LayoutAlign.TopCenter,
-                TextStyle(
+                text = "Adicionar nova revisão",
+                modifier = Modifier.wrapContentSize(Alignment.TopCenter),
+                style = TextStyle(
                     color = Color.Black,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.W500
@@ -120,9 +120,9 @@ class CustomDialog(
     @Composable
     private fun ItemText(text: String) {
         Text(
-            text,
-            Modifier.None,
-            TextStyle(
+            text = text,
+            modifier = Modifier,
+            style = TextStyle(
                 Color.DarkGray,
                 fontSize = 14.sp
             )
@@ -135,7 +135,7 @@ class CustomDialog(
         keyboardType: KeyboardType = KeyboardType.Text
     ) {
         Box(
-            modifier = DrawBorder(
+            modifier = Modifier.drawBorder(
                 size = 0.2.dp,
                 brush = SolidColor(Color.Black),
                 shape = RoundedCornerShape(8.dp)

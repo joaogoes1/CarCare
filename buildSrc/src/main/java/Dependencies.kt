@@ -9,10 +9,10 @@ object App {
 }
 
 object Versions {
-    const val gradle = "4.1.0-alpha04"
+    const val gradle = "4.1.0-alpha07"
     const val kotlin = "1.3.71"
     const val appcompat = "1.1.0"
-    const val compose = "0.1.0-dev08"
+    const val compose = "0.1.0-dev09"
     const val material = "1.1.0"
     const val coroutines = "1.3.5"
     const val koin = "2.0.1"
@@ -30,7 +30,6 @@ object Modules {
     const val core = ":core"
     const val database = ":database"
     const val ui = ":ui"
-    const val usecases = ":usecases"
 }
 
 object Libs {

@@ -8,15 +8,13 @@ import androidx.compose.remember
 import androidx.compose.state
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
 import androidx.ui.foundation.*
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.SolidColor
-import androidx.ui.layout.Arrangement
-import androidx.ui.layout.Column
-import androidx.ui.layout.LayoutPadding
-import androidx.ui.layout.Row
+import androidx.ui.layout.*
 import androidx.ui.material.*
 import androidx.ui.res.imageResource
 import androidx.ui.unit.dp
@@ -91,10 +89,10 @@ class HomeActivity : AppCompatActivity() {
     fun KilometersScreen(revisionList: List<RevisionItemModel>) =
         Column {
             VerticalScroller(
-                modifier = LayoutPadding(32.dp)
+                modifier = Modifier.padding(32.dp)
             ) {
                 Column(
-                    arrangement = Arrangement.Center
+                    verticalArrangement = Arrangement.Center
                 ) {
                     Text("Manutenção:")
                     revisionList.map {
@@ -107,7 +105,7 @@ class HomeActivity : AppCompatActivity() {
     @Composable
     fun revisionListItem(revisionItem: RevisionItemModel) {
         Surface(
-            modifier = LayoutPadding(
+            modifier = Modifier.padding(
                 top = 4.dp,
                 bottom = 4.dp
             ),
@@ -116,7 +114,7 @@ class HomeActivity : AppCompatActivity() {
             border = Border(1.dp, SolidColor(Color.Gray))
         ) {
             Surface(
-                modifier = LayoutPadding(
+                modifier = Modifier.padding(
                     start = 8.dp,
                     top = 8.dp,
                     end = 8.dp,
@@ -126,7 +124,7 @@ class HomeActivity : AppCompatActivity() {
                 shape = RoundedCornerShape(4.dp)
             ) {
                 Row(
-                    arrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     with(revisionItem) {
                         Text("$itemName ")
