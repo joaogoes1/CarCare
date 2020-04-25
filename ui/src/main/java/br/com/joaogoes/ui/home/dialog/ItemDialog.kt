@@ -27,6 +27,7 @@ fun ItemDialog(
     val itemState: MutableState<TextFieldValue> = state { TextFieldValue() }
     val currentKilometerState: MutableState<TextFieldValue> = state { TextFieldValue() }
     val nextRevisionState: MutableState<TextFieldValue> = state { TextFieldValue() }
+    val alertState = state { false }
 
     Dialog(onCloseRequest = { dismiss() }) {
         Surface(
@@ -42,31 +43,35 @@ fun ItemDialog(
                 ItemTextField(currentKilometerState, KeyboardType.Number)
                 ItemText("Next revision:")
                 ItemTextField(nextRevisionState, KeyboardType.Number)
-                Box(
-                    modifier = Modifier.padding(0.dp, 16.dp, 0.dp, 0.dp)
+                if (alertState.value) AlertText()
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(0.dp, 16.dp, 0.dp, 0.dp),
+                    horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ) {
-                        button("Cancel", onClick = { dismiss() })
-                        button("Confirmar") {
+                    button("Cancel", onClick = { dismiss() })
+                    button("Confirmar") {
+                        alertState.value = false
+                        val current = currentKilometerState.value.text.toLongOrNull()
+                        val target = nextRevisionState.value.text.toLongOrNull()
+                        if (current != null && target != null) {
                             val newItem = RevisionItemModel(
                                 uid = -1,
                                 itemName = itemState.value.text,
-                                currentRevisionKilometer = currentKilometerState.value.text.toLong(),
-                                nextRevisionKilometer = nextRevisionState.value.text.toLong()
+                                currentRevisionKilometer = current,
+                                nextRevisionKilometer = target
                             )
                             saveRevisionItem(newItem)
                             dismiss()
+                        } else {
+                            alertState.value = true
                         }
+
                     }
                 }
             }
         }
     }
 }
-
 
 @Composable
 private fun button(text: String, onClick: () -> Unit) {
@@ -98,6 +103,18 @@ private fun TitleText() {
     )
 }
 
+@Composable
+private fun AlertText() {
+    Text(
+        text = "Por favor, digite apenas números.",
+        modifier = Modifier.fillMaxWidth(),
+        style = TextStyle(
+            color = Color.Red,
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center
+        )
+    )
+}
 
 @Composable
 private fun ItemText(text: String) {
@@ -116,21 +133,20 @@ private fun ItemTextField(
     state: MutableState<TextFieldValue>,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
-    Box(
-        modifier = Modifier.drawBorder(
-            size = 0.2.dp,
-            brush = SolidColor(Color.Black),
-            shape = RoundedCornerShape(8.dp)
-        )
-    ) {
-        TextField(
-            modifier = Modifier.fillMaxWidth().padding(4.dp),
-            value = state.value,
-            textStyle = TextStyle(
-                fontSize = 14.sp
+    TextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+            .drawBorder(
+                size = 0.2.dp,
+                brush = SolidColor(Color.Black),
+                shape = RoundedCornerShape(8.dp)
             ),
-            onValueChange = { state.value = it },
-            keyboardType = keyboardType
-        )
-    }
+        value = state.value,
+        textStyle = TextStyle(
+            fontSize = 14.sp
+        ),
+        onValueChange = { state.value = it },
+        keyboardType = keyboardType
+    )
 }
