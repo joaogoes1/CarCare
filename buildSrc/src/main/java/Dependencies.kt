@@ -17,8 +17,9 @@ object Versions {
     const val coroutines = "1.3.5"
     const val koin = "2.0.1"
     const val room = "2.2.4"
+}
 
-    /* test */
+object TestVersions {
     const val junit = "4.12"
     const val mockk = "1.9.3"
     const val extJunit = "1.1.1"
@@ -54,19 +55,21 @@ object Libs {
     }
 
     object Ui {
-        private const val compose = "androidx.ui"
-        const val framework = "$compose:ui-framework:${Versions.compose}"
-        const val layout = "$compose:ui-layout:${Versions.compose}"
-        const val foundation = "$compose:ui-foundation:${Versions.compose}"
-        const val material = "$compose:ui-material:${Versions.compose}"
-        const val tooling = "$compose:ui-tooling:${Versions.compose}"
+        private const val composePrefix = "androidx.ui"
+        const val framework = "$composePrefix:ui-framework:${Versions.compose}"
+        const val layout = "$composePrefix:ui-layout:${Versions.compose}"
+        const val foundation = "$composePrefix:ui-foundation:${Versions.compose}"
+        const val material = "$composePrefix:ui-material:${Versions.compose}"
+        const val tooling = "$composePrefix:ui-tooling:${Versions.compose}"
+        const val compiler = "androidx.compose:compose-compiler:${Versions.compose}"
+        const val runtime = "androidx.compose:compose-runtime:${Versions.compose}"
     }
 }
 
 object TestLib {
-    const val junit = "junit:junit:${Versions.junit}"
-    const val mockk = "io.mockk:mockk:${Versions.mockk}"
+    const val junit = "junit:junit:${TestVersions.junit}"
+    const val mockk = "io.mockk:mockk:${TestVersions.mockk}"
     const val room = "androidx.room:room-testing:${Versions.room}"
-    const val extJunit = "androidx.test.ext:junit:${Versions.extJunit}"
-    const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    const val extJunit = "androidx.test.ext:junit:${TestVersions.extJunit}"
+    const val espresso = "androidx.test.espresso:espresso-core:${TestVersions.espresso}"
 }

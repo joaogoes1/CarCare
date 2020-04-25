@@ -48,6 +48,8 @@ dependencies {
     implementation(Libs.Ui.material)
     implementation(Libs.Ui.tooling)
     implementation(Libs.material)
+    implementation(Libs.Ui.runtime)
+    kotlin(Libs.Ui.compiler)
     implementation(project(Modules.core))
 
     testImplementation(TestLib.junit)
