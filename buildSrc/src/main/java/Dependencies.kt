@@ -61,6 +61,7 @@ object Libs {
         const val foundation = "$composePrefix:ui-foundation:${Versions.compose}"
         const val material = "$composePrefix:ui-material:${Versions.compose}"
         const val tooling = "$composePrefix:ui-tooling:${Versions.compose}"
+        const val livedata = "$composePrefix:ui-livedata:${Versions.compose}"
         const val compiler = "androidx.compose:compose-compiler:${Versions.compose}"
         const val runtime = "androidx.compose:compose-runtime:${Versions.compose}"
     }

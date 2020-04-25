@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.compose.Composable
 import androidx.compose.MutableState
 import androidx.compose.state
-import androidx.ui.core.Alignment
 import androidx.ui.core.Modifier
 import androidx.ui.core.setContent
 import androidx.ui.foundation.*
@@ -20,13 +19,17 @@ import androidx.ui.material.Button
 import androidx.ui.material.Surface
 import androidx.ui.text.TextStyle
 import androidx.ui.text.font.FontWeight
+import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import br.com.joaogoes.model.RevisionItemModel
 import br.com.joaogoes.ui.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class CustomDialog(
+/*
+    Use this dialog when find a solution for state being re-created always user digits something.
+ */
+class ItemBottomDialog(
     val saveRevisionItem: (RevisionItemModel) -> Unit
 ) : BottomSheetDialogFragment() {
 
@@ -103,17 +106,16 @@ class CustomDialog(
 
     @Composable
     private fun TitleText() {
-        Box(Modifier.fillMaxWidth()) {
-            Text(
-                text = "Adicionar nova revisão",
-                modifier = Modifier.wrapContentSize(Alignment.TopCenter),
-                style = TextStyle(
-                    color = Color.Black,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.W500
-                )
+        Text(
+            text = "Adicionar nova revisão",
+            modifier = Modifier.fillMaxWidth(),
+            style = TextStyle(
+                color = Color.Black,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.W500,
+                textAlign = TextAlign.Center
             )
-        }
+        )
     }
 
 
@@ -142,7 +144,7 @@ class CustomDialog(
             )
         ) {
             TextField(
-                modifier = Modifier.padding(4.dp),
+                modifier = Modifier.fillMaxWidth().padding(4.dp),
                 value = state.value,
                 textStyle = TextStyle(
                     fontSize = 14.sp

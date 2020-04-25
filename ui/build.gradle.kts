@@ -40,6 +40,7 @@ android {
 
 dependencies {
     implementation(Libs.kotlin)
+    implementation(Libs.material)
     implementation(Libs.Androidx.core)
     implementation(Libs.Androidx.appcompat)
     implementation(Libs.Ui.framework)
@@ -47,7 +48,7 @@ dependencies {
     implementation(Libs.Ui.foundation)
     implementation(Libs.Ui.material)
     implementation(Libs.Ui.tooling)
-    implementation(Libs.material)
+    implementation(Libs.Ui.livedata)
     implementation(Libs.Ui.runtime)
     kotlin(Libs.Ui.compiler)
     implementation(project(Modules.core))

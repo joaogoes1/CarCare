@@ -14,7 +14,10 @@ import androidx.ui.foundation.*
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.SolidColor
-import androidx.ui.layout.*
+import androidx.ui.layout.Arrangement
+import androidx.ui.layout.Column
+import androidx.ui.layout.Row
+import androidx.ui.layout.padding
 import androidx.ui.material.*
 import androidx.ui.res.imageResource
 import androidx.ui.unit.dp
@@ -22,7 +25,7 @@ import br.com.joaogoes.model.RevisionItemModel
 import br.com.joaogoes.ui.GenericErrorScreen
 import br.com.joaogoes.ui.LoadingScreen
 import br.com.joaogoes.ui.R
-import br.com.joaogoes.ui.home.dialog.CustomDialog
+import br.com.joaogoes.ui.home.dialog.ItemDialog
 import org.koin.android.ext.android.inject
 
 class HomeActivity : AppCompatActivity() {
@@ -33,17 +36,14 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         setContent {
+            val dialogState = state { false }
             MaterialTheme {
                 Scaffold(
                     floatingActionButton = {
                         FloatingActionButton(
                             onClick = {
-                                val saveItemDialog = CustomDialog { item ->
-                                    viewModel.saveRevision(item)
-                                }
-                                saveItemDialog.show(supportFragmentManager, "HomeActivity")
+                                dialogState.value = true
                             }
                         ) {
                             Icon(imageResource(R.drawable.ic_plus))
@@ -57,6 +57,15 @@ class HomeActivity : AppCompatActivity() {
                         )
                     },
                     bodyContent = {
+                        if (dialogState.value) {
+                            ItemDialog(
+                                dismiss = { dialogState.value = false },
+                                saveRevisionItem = { item ->
+                                    viewModel.saveRevision(item)
+
+                                }
+                            )
+                        }
                         state = observeState<HomeViewState>(viewModel.viewState)
                         buildLayout(viewState = state)
                     }
