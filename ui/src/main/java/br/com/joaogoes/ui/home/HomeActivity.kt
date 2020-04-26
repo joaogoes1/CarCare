@@ -14,12 +14,13 @@ import androidx.ui.foundation.*
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.SolidColor
-import androidx.ui.layout.Arrangement
-import androidx.ui.layout.Column
-import androidx.ui.layout.Row
-import androidx.ui.layout.padding
-import androidx.ui.material.*
+import androidx.ui.layout.*
+import androidx.ui.material.FloatingActionButton
+import androidx.ui.material.MaterialTheme
+import androidx.ui.material.Scaffold
+import androidx.ui.material.TopAppBar
 import androidx.ui.res.imageResource
+import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import br.com.joaogoes.model.RevisionItemModel
 import br.com.joaogoes.ui.GenericErrorScreen
@@ -61,10 +62,7 @@ class HomeActivity : AppCompatActivity() {
                             ItemDialog(
                                 context = applicationContext,
                                 dismiss = { dialogState.value = false },
-                                action = { item ->
-                                    viewModel.saveRevision(item)
-
-                                }
+                                action = { item -> viewModel.saveRevision(item) }
                             )
                         }
                         state = observeState<HomeViewState>(viewModel.viewState)
@@ -107,7 +105,9 @@ class HomeActivity : AppCompatActivity() {
                 Column(
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(getString(R.string.home_activity_maintenance))
+                    Text(getString(R.string.home_activity_maintenance),
+                        modifier = Modifier.padding(bottom = 4.dp)
+                    )
                     revisionList.map {
                         revisionListItem(it)
                     }
@@ -117,30 +117,22 @@ class HomeActivity : AppCompatActivity() {
 
     @Composable
     fun revisionListItem(revisionItem: RevisionItemModel) {
-        Surface(
+        Box(
             modifier = Modifier.padding(
                 top = 4.dp,
                 bottom = 4.dp
-            ),
-            color = Color.White,
+            ).fillMaxWidth(),
+            backgroundColor = Color.White,
             shape = RoundedCornerShape(16.dp),
             border = Border(1.dp, SolidColor(Color.Gray))
         ) {
-            Surface(
-                modifier = Modifier.padding(
-                    start = 8.dp,
-                    top = 8.dp,
-                    end = 8.dp,
-                    bottom = 8.dp
-                ),
-                color = Color.White,
-                shape = RoundedCornerShape(4.dp)
+            Row(
+                modifier = Modifier.padding(top = 4.dp, bottom = 4.dp, start = 8.dp, end = 8.dp).fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    with(revisionItem) {
-                        Text(itemName)
+                with(revisionItem) {
+                    Text(itemName)
+                    Row{
                         Text(getString(R.string.home_activity_kilometer, currentRevisionKilometer))
                         Image(imageResource(R.drawable.ic_right_arrow))
                         Text(getString(R.string.home_activity_kilometer, nextRevisionKilometer))
@@ -148,5 +140,19 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
+
+    }
+
+    @Preview
+    @Composable
+    fun preview() {
+        revisionListItem(
+            revisionItem = RevisionItemModel(
+                uid = 0,
+                itemName = "Item teste",
+                currentRevisionKilometer = 100.000.toLong(),
+                nextRevisionKilometer = 100.000.toLong()
+            )
+        )
     }
 }

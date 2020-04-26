@@ -74,7 +74,6 @@ class ItemBottomDialog(
                         button("Cancel", onClick = { dismiss() })
                         button("Confirmar") {
                             val newItem = RevisionItemModel(
-                                uid = -1,
                                 itemName = itemState.value.text,
                                 currentRevisionKilometer = currentKilometerState.value.text.toLong(),
                                 nextRevisionKilometer = nextRevisionState.value.text.toLong()

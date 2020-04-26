@@ -28,7 +28,6 @@ class HomeViewModel(
                 getRevisionItems()
                     .onSuccess { viewState.postValue(HomeViewState.Success(it)) }
                     .onError { error -> viewState.postValue(HomeViewState.Error(error.message)) }
-
             }
         }
     }

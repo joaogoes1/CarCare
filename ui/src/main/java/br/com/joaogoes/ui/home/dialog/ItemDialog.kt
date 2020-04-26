@@ -58,7 +58,6 @@ internal fun ItemDialog(
                         val target = nextRevisionState.value.text.toLongOrNull()
                         if (current != null && target != null) {
                             val newItem = RevisionItemModel(
-                                uid = -1,
                                 itemName = itemState.value.text,
                                 currentRevisionKilometer = current,
                                 nextRevisionKilometer = target

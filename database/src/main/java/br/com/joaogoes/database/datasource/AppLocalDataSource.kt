@@ -24,8 +24,7 @@ class AppLocalDataSource(
     override suspend fun saveRevisionItem(revisionItem: RevisionItemModel): Result<Unit, RevisionRepositoryError> =
         try {
             val item = mapper.mapFromModel(revisionItem)
-            if (item.uid == -1) {
-                item.copy(uid = null)
+            if (item.uid == null) {
                 revisionItemDAO.insert(item)
             } else {
                 revisionItemDAO.update(item)
