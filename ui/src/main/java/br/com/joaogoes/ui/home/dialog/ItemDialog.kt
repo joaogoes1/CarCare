@@ -1,5 +1,6 @@
 package br.com.joaogoes.ui.home.dialog
 
+import android.content.Context
 import androidx.compose.Composable
 import androidx.compose.MutableState
 import androidx.compose.state
@@ -18,9 +19,11 @@ import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 import br.com.joaogoes.model.RevisionItemModel
+import br.com.joaogoes.ui.R
 
 @Composable
-fun ItemDialog(
+internal fun ItemDialog(
+    context: Context,
     saveRevisionItem: (RevisionItemModel) -> Unit,
     dismiss: () -> Unit
 ) {
@@ -36,20 +39,20 @@ fun ItemDialog(
             Column(
                 modifier = Modifier.padding(8.dp)
             ) {
-                TitleText()
-                ItemText("Item:")
+                TitleText(context.getString(R.string.item_dialog_title))
+                ItemText(context.getString(R.string.item_dialog_item_name))
                 ItemTextField(itemState)
-                ItemText("Current Kilometer:")
+                ItemText(context.getString(R.string.item_dialog_current_kilometer))
                 ItemTextField(currentKilometerState, KeyboardType.Number)
-                ItemText("Next revision:")
+                ItemText(context.getString(R.string.item_dialog_target_kilometer))
                 ItemTextField(nextRevisionState, KeyboardType.Number)
-                if (alertState.value) AlertText()
+                if (alertState.value) AlertText(context.getString(R.string.item_dialog_alert))
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(0.dp, 16.dp, 0.dp, 0.dp),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    button("Cancel", onClick = { dismiss() })
-                    button("Confirmar") {
+                    button(context.getString(R.string.cancel), onClick = { dismiss() })
+                    button(context.getString(R.string.confirm)) {
                         alertState.value = false
                         val current = currentKilometerState.value.text.toLongOrNull()
                         val target = nextRevisionState.value.text.toLongOrNull()
@@ -90,9 +93,9 @@ private fun button(text: String, onClick: () -> Unit) {
 }
 
 @Composable
-private fun TitleText() {
+private fun TitleText(title: String) {
     Text(
-        text = "Adicionar nova revisão",
+        text = title,
         modifier = Modifier.fillMaxWidth(),
         style = TextStyle(
             color = Color.Black,
@@ -104,9 +107,9 @@ private fun TitleText() {
 }
 
 @Composable
-private fun AlertText() {
+private fun AlertText(text: String) {
     Text(
-        text = "Por favor, digite apenas números.",
+        text = text,
         modifier = Modifier.fillMaxWidth(),
         style = TextStyle(
             color = Color.Red,

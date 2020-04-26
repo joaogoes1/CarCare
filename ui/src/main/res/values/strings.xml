@@ -1,1 +1,12 @@
-<resources></resources>
+<resources>
+    <string name="item_dialog_title">Adicionar nova revisão</string>
+    <string name="item_dialog_item_name">Item: </string>
+    <string name="item_dialog_current_kilometer">Quilometragem atual: </string>
+    <string name="item_dialog_target_kilometer">Próxima revisão: </string>
+    <string name="item_dialog_alert">Por favor, digite apenas números.</string>
+    <string name="home_activity_maintenance">Manutenção:</string>
+    <string name="home_activity_kilometer">%d km</string>
+    <string name="cancel">Cancelar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="app_name">CarCare</string>
+</resources>

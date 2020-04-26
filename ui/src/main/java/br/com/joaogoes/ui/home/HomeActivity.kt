@@ -52,13 +52,14 @@ class HomeActivity : AppCompatActivity() {
                     topAppBar = {
                         TopAppBar(
                             title = {
-                                Text("CarCare")
+                                Text(getString(R.string.app_name))
                             }
                         )
                     },
                     bodyContent = {
                         if (dialogState.value) {
                             ItemDialog(
+                                context = applicationContext,
                                 dismiss = { dialogState.value = false },
                                 saveRevisionItem = { item ->
                                     viewModel.saveRevision(item)
@@ -103,7 +104,7 @@ class HomeActivity : AppCompatActivity() {
                 Column(
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text("Manutenção:")
+                    Text(getString(R.string.home_activity_maintenance))
                     revisionList.map {
                         revisionListItem(it)
                     }
@@ -136,10 +137,10 @@ class HomeActivity : AppCompatActivity() {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     with(revisionItem) {
-                        Text("$itemName ")
-                        Text("$currentRevisionKilometer km")
+                        Text(itemName)
+                        Text(getString(R.string.home_activity_kilometer, currentRevisionKilometer))
                         Image(imageResource(R.drawable.ic_right_arrow))
-                        Text("$nextRevisionKilometer km")
+                        Text(getString(R.string.home_activity_kilometer, nextRevisionKilometer))
                     }
                 }
             }
