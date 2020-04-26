@@ -41,6 +41,7 @@ android {
 dependencies {
     implementation(Libs.kotlin)
     implementation(Libs.material)
+    implementation(Libs.Lifecycle.viewModel)
     implementation(Libs.Androidx.core)
     implementation(Libs.Androidx.appcompat)
     implementation(Libs.Ui.framework)

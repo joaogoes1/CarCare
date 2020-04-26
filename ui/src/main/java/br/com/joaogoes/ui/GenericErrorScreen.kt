@@ -5,8 +5,8 @@ import androidx.ui.foundation.Text
 import androidx.ui.material.Surface
 
 @Composable
-fun GenericErrorScreen() {
+fun GenericErrorScreen(message: String) {
     Surface {
-        Text("Ops! Tivemos um erro!")
+        Text(message)
     }
 }

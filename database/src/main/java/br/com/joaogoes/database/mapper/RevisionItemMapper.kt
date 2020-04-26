@@ -8,7 +8,7 @@ class RevisionItemMapper {
     fun mapFromEntity(from: RevisionItemEntity): RevisionItemModel =
         with(from) {
             RevisionItemModel(
-                uid = uid,
+                uid = uid ?: -1,
                 itemName = name,
                 currentRevisionKilometer = initialKilometer,
                 currentRevisionDate = initialDate,

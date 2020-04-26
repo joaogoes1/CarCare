@@ -4,6 +4,6 @@ import br.com.joaogoes.model.RevisionItemModel
 
 sealed class HomeViewState {
     object Loading : HomeViewState()
-    object Error : HomeViewState()
+    class Error(val message: String? = null) : HomeViewState()
     class Success(val revisionItems: List<RevisionItemModel>) : HomeViewState()
 }

@@ -17,6 +17,7 @@ object Versions {
     const val coroutines = "1.3.5"
     const val koin = "2.0.1"
     const val room = "2.2.4"
+    const val lifecycle = "2.2.0"
 }
 
 object TestVersions {
@@ -52,6 +53,10 @@ object Libs {
         const val runtime = "androidx.room:room-runtime:${Versions.room}"
         const val ktx = "androidx.room:room-ktx:${Versions.room}"
         const val compiler = "androidx.room:room-compiler:${Versions.room}"
+    }
+
+    object Lifecycle {
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     }
 
     object Ui {

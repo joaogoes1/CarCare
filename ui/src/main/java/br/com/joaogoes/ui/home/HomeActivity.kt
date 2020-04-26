@@ -61,7 +61,7 @@ class HomeActivity : AppCompatActivity() {
                             ItemDialog(
                                 context = applicationContext,
                                 dismiss = { dialogState.value = false },
-                                saveRevisionItem = { item ->
+                                action = { item ->
                                     viewModel.saveRevision(item)
 
                                 }
@@ -92,7 +92,10 @@ class HomeActivity : AppCompatActivity() {
         when (viewState) {
             is HomeViewState.Loading -> LoadingScreen()
             is HomeViewState.Success -> KilometersScreen(viewState.revisionItems)
-            else -> GenericErrorScreen()
+            is HomeViewState.Error -> GenericErrorScreen(
+                viewState.message ?: getString(R.string.generic_error_message)
+            )
+            else -> GenericErrorScreen(getString(R.string.generic_error_message))
         }
 
     @Composable

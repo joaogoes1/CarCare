@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity(tableName = "revision_item_entity")
 data class RevisionItemEntity(
-    @PrimaryKey(autoGenerate = true) val uid: Int,
+    @PrimaryKey(autoGenerate = true) val uid: Int?,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "initial_kilometer") val initialKilometer: Long,
     @ColumnInfo(name = "initial_date") val initialDate: Calendar?,

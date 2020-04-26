@@ -24,7 +24,7 @@ import br.com.joaogoes.ui.R
 @Composable
 internal fun ItemDialog(
     context: Context,
-    saveRevisionItem: (RevisionItemModel) -> Unit,
+    action: (RevisionItemModel) -> Unit,
     dismiss: () -> Unit
 ) {
     val itemState: MutableState<TextFieldValue> = state { TextFieldValue() }
@@ -63,8 +63,8 @@ internal fun ItemDialog(
                                 currentRevisionKilometer = current,
                                 nextRevisionKilometer = target
                             )
-                            saveRevisionItem(newItem)
                             dismiss()
+                            action(newItem)
                         } else {
                             alertState.value = true
                         }

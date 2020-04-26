@@ -6,6 +6,7 @@
     <string name="item_dialog_alert">Por favor, digite apenas números.</string>
     <string name="home_activity_maintenance">Manutenção:</string>
     <string name="home_activity_kilometer">%d km</string>
+    <string name="generic_error_message">Ops! Tivemos um erro.</string>
     <string name="cancel">Cancelar</string>
     <string name="confirm">Confirmar</string>
     <string name="app_name">CarCare</string>
