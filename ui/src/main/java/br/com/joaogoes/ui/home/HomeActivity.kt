@@ -15,10 +15,7 @@ import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.SolidColor
 import androidx.ui.layout.*
-import androidx.ui.material.FloatingActionButton
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.Scaffold
-import androidx.ui.material.TopAppBar
+import androidx.ui.material.*
 import androidx.ui.res.imageResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
@@ -39,7 +36,13 @@ class HomeActivity : AppCompatActivity() {
 
         setContent {
             val dialogState = state { false }
-            MaterialTheme {
+            MaterialTheme(
+                colors = lightColorPalette(
+                    primary = Color(255, 23,68),
+                    primaryVariant = Color(255, 97, 111),
+                    secondary = Color(196, 0,29)
+                )
+            ) {
                 Scaffold(
                     floatingActionButton = {
                         FloatingActionButton(
