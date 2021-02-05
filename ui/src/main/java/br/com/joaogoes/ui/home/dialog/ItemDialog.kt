@@ -1,23 +1,29 @@
 package br.com.joaogoes.ui.home.dialog
 
 import android.content.Context
-import androidx.compose.Composable
-import androidx.compose.MutableState
-import androidx.compose.state
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.*
-import androidx.ui.foundation.shape.corner.RoundedCornerShape
-import androidx.ui.graphics.Color
-import androidx.ui.graphics.SolidColor
-import androidx.ui.input.KeyboardType
-import androidx.ui.layout.*
-import androidx.ui.material.Button
-import androidx.ui.material.Surface
-import androidx.ui.text.TextStyle
-import androidx.ui.text.font.FontWeight
-import androidx.ui.text.style.TextAlign
-import androidx.ui.unit.dp
-import androidx.ui.unit.sp
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Button
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import br.com.joaogoes.model.RevisionItemModel
 import br.com.joaogoes.ui.R
 
@@ -27,14 +33,14 @@ internal fun ItemDialog(
     action: (RevisionItemModel) -> Unit,
     dismiss: () -> Unit
 ) {
-    val itemState: MutableState<TextFieldValue> = state { TextFieldValue() }
-    val currentKilometerState: MutableState<TextFieldValue> = state { TextFieldValue() }
-    val nextRevisionState: MutableState<TextFieldValue> = state { TextFieldValue() }
-    val alertState = state { false }
+    val itemState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    val currentKilometerState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    val nextRevisionState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+    val alertState = mutableStateOf(false)
 
-    Dialog(onCloseRequest = { dismiss() }) {
+    Dialog(onDismissRequest = { dismiss() }) {
         Surface(
-            border = Border(0.2.dp, Color.Black)
+            border = BorderStroke(0.2.dp, Color.Black)
         ) {
             Column(
                 modifier = Modifier.padding(8.dp)
@@ -78,7 +84,7 @@ internal fun ItemDialog(
 @Composable
 private fun button(text: String, onClick: () -> Unit) {
     Button(
-        text = {
+        content = {
             Text(
                 text = text,
                 modifier = Modifier,
@@ -139,8 +145,8 @@ private fun ItemTextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
-            .drawBorder(
-                size = 0.2.dp,
+            .border(
+                width = 0.2.dp,
                 brush = SolidColor(Color.Black),
                 shape = RoundedCornerShape(8.dp)
             ),
@@ -149,6 +155,6 @@ private fun ItemTextField(
             fontSize = 14.sp
         ),
         onValueChange = { state.value = it },
-        keyboardType = keyboardType
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType)
     )
 }

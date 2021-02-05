@@ -28,12 +28,13 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        useIR = true
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerVersion = "1.3.61-dev-withExperimentalGoogleExtensions-20200129"
+        kotlinCompilerVersion = "1.4.21"
         kotlinCompilerExtensionVersion = Versions.compose
     }
 }
@@ -45,16 +46,22 @@ dependencies {
     implementation(Libs.Androidx.core)
     implementation(Libs.Androidx.appcompat)
     implementation(Libs.Ui.framework)
-    implementation(Libs.Ui.layout)
     implementation(Libs.Ui.foundation)
     implementation(Libs.Ui.material)
     implementation(Libs.Ui.tooling)
     implementation(Libs.Ui.livedata)
     implementation(Libs.Ui.runtime)
-    kotlin(Libs.Ui.compiler)
+//    kotlin(Libs.Ui.compiler)
     implementation(project(Modules.core))
 
     testImplementation(TestLib.junit)
     androidTestImplementation(TestLib.extJunit)
     androidTestImplementation(TestLib.espresso)
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies")
+    }
 }
