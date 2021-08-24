@@ -1,25 +1,19 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("kotlin-android-extensions")
     id("org.jetbrains.kotlin.kapt")
 }
 android {
-    compileSdkVersion(App.compileSdk)
-
+    compileSdk = App.compileSdk
     defaultConfig {
-        minSdkVersion(App.minSdk)
-        targetSdkVersion(App.targetSdk)
-        versionCode(App.versionCode)
-        versionName(App.versionName)
+        minSdk = App.minSdk
+        targetSdk = App.targetSdk
 
-        testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
-        consumerProguardFiles("consumer-rules.pro")
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         getByName("release") {
-            minifyEnabled(false)
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -36,6 +30,7 @@ dependencies {
     implementation(Libs.kotlin)
     implementation(Libs.Androidx.core)
     implementation(Libs.Androidx.appcompat)
+    implementation(Libs.Koin.core)
     api(Libs.Room.runtime)
     implementation(Libs.Room.ktx)
     kapt(Libs.Room.compiler)

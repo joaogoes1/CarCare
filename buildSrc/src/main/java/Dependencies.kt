@@ -9,13 +9,13 @@ object App {
 }
 
 object Versions {
-    const val gradle = "4.1.0-alpha07"
-    const val kotlin = "1.3.71"
+    const val gradle = "7.0.0-alpha04"
+    const val kotlin = "1.4.32"
     const val appcompat = "1.1.0"
-    const val compose = "0.1.0-dev09"
+    const val compose = "1.0.0-beta07"
     const val material = "1.1.0"
     const val coroutines = "1.3.5"
-    const val koin = "2.0.1"
+    const val koin = "3.0.2"
     const val room = "2.2.4"
     const val lifecycle = "2.2.0"
 }
@@ -37,16 +37,20 @@ object Modules {
 object Libs {
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
     const val material = "com.google.android.material:material:${Versions.material}"
-    const val koin = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
 
     object Androidx {
         const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
         const val core = "androidx.core:core-ktx:1.2.0"
     }
 
-    object Corountines {
+    object Coroutines {
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    }
+
+    object Koin {
+        const val core = "io.insert-koin:koin-android:${Versions.koin}"
+        const val compose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
     }
 
     object Room {
@@ -60,15 +64,17 @@ object Libs {
     }
 
     object Ui {
-        private const val composePrefix = "androidx.ui"
-        const val framework = "$composePrefix:ui-framework:${Versions.compose}"
-        const val layout = "$composePrefix:ui-layout:${Versions.compose}"
-        const val foundation = "$composePrefix:ui-foundation:${Versions.compose}"
-        const val material = "$composePrefix:ui-material:${Versions.compose}"
-        const val tooling = "$composePrefix:ui-tooling:${Versions.compose}"
-        const val livedata = "$composePrefix:ui-livedata:${Versions.compose}"
+        private const val uiPrefix = "androidx.compose.ui"
+        private const val foundationPrefix = "androidx.compose.foundation"
+        private const val runtimePrefix = "androidx.compose.runtime"
+        private const val materialPrefix = "androidx.compose.material"
+        const val framework = "$uiPrefix:ui:${Versions.compose}"
+        const val foundation = "$foundationPrefix:foundation:${Versions.compose}"
+        const val material = "$materialPrefix:material:${Versions.compose}"
+        const val tooling = "$uiPrefix:ui-tooling:${Versions.compose}"
+        const val runtime = "$runtimePrefix:runtime:${Versions.compose}"
+        const val livedata = "$runtimePrefix:runtime-livedata:${Versions.compose}"
         const val compiler = "androidx.compose:compose-compiler:${Versions.compose}"
-        const val runtime = "androidx.compose:compose-runtime:${Versions.compose}"
     }
 }
 

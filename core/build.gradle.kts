@@ -9,9 +9,8 @@ java {
 
 dependencies {
     implementation(Libs.kotlin)
-    api(Libs.Corountines.core)
-    api(Libs.Corountines.android)
-    api(Libs.koin)
+    api(Libs.Coroutines.core)
+    api(Libs.Coroutines.android)
     testImplementation(TestLib.junit)
     testImplementation(TestLib.mockk)
 }

@@ -4,24 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.Composable
-import androidx.compose.MutableState
-import androidx.compose.state
-import androidx.ui.core.Modifier
-import androidx.ui.core.setContent
-import androidx.ui.foundation.*
-import androidx.ui.foundation.shape.corner.RoundedCornerShape
-import androidx.ui.graphics.Color
-import androidx.ui.graphics.SolidColor
-import androidx.ui.input.KeyboardType
-import androidx.ui.layout.*
-import androidx.ui.material.Button
-import androidx.ui.material.Surface
-import androidx.ui.text.TextStyle
-import androidx.ui.text.font.FontWeight
-import androidx.ui.text.style.TextAlign
-import androidx.ui.unit.dp
-import androidx.ui.unit.sp
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.com.joaogoes.model.RevisionItemModel
 import br.com.joaogoes.ui.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -39,20 +40,20 @@ class ItemBottomDialog(
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.empty_layout, container, false)
-        (view as ViewGroup).setContent {
-            CustomDialogScreen()
-        }
+//        (view as ViewGroup).setContent {
+//            CustomDialogScreen()
+//        }
         return view
     }
 
     @Composable
     fun CustomDialogScreen() {
-        val itemState: MutableState<TextFieldValue> = state { TextFieldValue() }
-        val currentKilometerState: MutableState<TextFieldValue> = state { TextFieldValue() }
-        val nextRevisionState: MutableState<TextFieldValue> = state { TextFieldValue() }
+        val itemState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+        val currentKilometerState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
+        val nextRevisionState: MutableState<TextFieldValue> = mutableStateOf(TextFieldValue())
 
         Surface(
-            border = Border(0.2.dp, Color.Black)
+            border = BorderStroke(0.2.dp, Color.Black)
         ) {
             Column(
                 modifier = Modifier.padding(8.dp)
@@ -61,9 +62,9 @@ class ItemBottomDialog(
                 ItemText("Item:")
                 ItemTextField(itemState)
                 ItemText("Current Kilometer:")
-                ItemTextField(currentKilometerState, KeyboardType.Number)
+                ItemTextField(currentKilometerState, KeyboardOptions(keyboardType = KeyboardType.Number))
                 ItemText("Next revision:")
-                ItemTextField(nextRevisionState, KeyboardType.Number)
+                ItemTextField(nextRevisionState, KeyboardOptions(keyboardType = KeyboardType.Number))
                 Box(
                     modifier = Modifier.padding(0.dp, 16.dp, 0.dp, 0.dp)
                 ) {
@@ -89,8 +90,8 @@ class ItemBottomDialog(
 
     @Composable
     private fun button(text: String, onClick: () -> Unit) {
-        Button(
-            text = {
+        TextButton(
+            content = {
                 Text(
                     text = text,
                     modifier = Modifier,
@@ -133,23 +134,25 @@ class ItemBottomDialog(
     @Composable
     private fun ItemTextField(
         state: MutableState<TextFieldValue>,
-        keyboardType: KeyboardType = KeyboardType.Text
+        keyboardType: KeyboardOptions = KeyboardOptions.Default
     ) {
         Box(
-            modifier = Modifier.drawBorder(
-                size = 0.2.dp,
+            modifier = Modifier.border(
+                width = 0.2.dp,
                 brush = SolidColor(Color.Black),
                 shape = RoundedCornerShape(8.dp)
             )
         ) {
             TextField(
-                modifier = Modifier.fillMaxWidth().padding(4.dp),
                 value = state.value,
+                onValueChange = { state.value = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
                 textStyle = TextStyle(
                     fontSize = 14.sp
                 ),
-                onValueChange = { state.value = it },
-                keyboardType = keyboardType
+                keyboardOptions = keyboardType
             )
         }
     }

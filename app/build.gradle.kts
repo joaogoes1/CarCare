@@ -1,25 +1,22 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("kapt")
 }
 android {
-    compileSdkVersion(App.compileSdk)
-
+    compileSdk = App.compileSdk
     defaultConfig {
-        applicationId(App.application)
-        minSdkVersion(App.minSdk)
-        targetSdkVersion(App.targetSdk)
-        versionCode(App.versionCode)
-        versionName(App.versionName)
+        applicationId = App.application
+        minSdk = App.minSdk
+        targetSdk = App.targetSdk
+        versionCode = App.versionCode
+        versionName = App.versionName
 
-        testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         getByName("release") {
-            minifyEnabled(false)
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -39,6 +36,7 @@ dependencies {
     implementation(Libs.kotlin)
     implementation(Libs.Androidx.core)
     implementation(Libs.Androidx.appcompat)
+    implementation(Libs.Koin.core)
     implementation(project(Modules.database))
     implementation(project(Modules.ui))
     implementation(project(Modules.core))

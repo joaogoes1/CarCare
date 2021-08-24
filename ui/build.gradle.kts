@@ -1,24 +1,18 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("kotlin-android-extensions")
 }
 android {
-    compileSdkVersion(App.compileSdk)
-
+    compileSdk = App.compileSdk
     defaultConfig {
-        minSdkVersion(App.minSdk)
-        targetSdkVersion(App.targetSdk)
-        versionCode(App.versionCode)
-        versionName(App.versionName)
+        minSdk = App.minSdk
+        targetSdk = App.targetSdk
 
-        testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
-        consumerProguardFiles("consumer-rules.pro")
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         getByName("release") {
-            minifyEnabled(false)
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -33,7 +27,6 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerVersion = "1.3.61-dev-withExperimentalGoogleExtensions-20200129"
         kotlinCompilerExtensionVersion = Versions.compose
     }
 }
@@ -44,17 +37,26 @@ dependencies {
     implementation(Libs.Lifecycle.viewModel)
     implementation(Libs.Androidx.core)
     implementation(Libs.Androidx.appcompat)
+    implementation("androidx.activity:activity-compose:1.3.0-alpha08")
     implementation(Libs.Ui.framework)
-    implementation(Libs.Ui.layout)
     implementation(Libs.Ui.foundation)
     implementation(Libs.Ui.material)
     implementation(Libs.Ui.tooling)
     implementation(Libs.Ui.livedata)
     implementation(Libs.Ui.runtime)
-    kotlin(Libs.Ui.compiler)
+    implementation(Libs.Koin.core)
+//    implementation(Libs.Koin.compose)
+//    kotlin(Libs.Ui.compiler)
     implementation(project(Modules.core))
 
     testImplementation(TestLib.junit)
     androidTestImplementation(TestLib.extJunit)
     androidTestImplementation(TestLib.espresso)
 }
+
+//tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+//    kotlinOptions {
+//        jvmTarget = "1.8"
+//        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies")
+//    }
+//}

@@ -1,95 +1,86 @@
 package br.com.joaogoes.ui.home
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.Composable
-import androidx.compose.onCommit
-import androidx.compose.remember
-import androidx.compose.state
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.ui.core.Modifier
-import androidx.ui.core.setContent
-import androidx.ui.foundation.*
-import androidx.ui.foundation.shape.corner.RoundedCornerShape
-import androidx.ui.graphics.Color
-import androidx.ui.graphics.SolidColor
-import androidx.ui.layout.*
-import androidx.ui.material.*
-import androidx.ui.res.imageResource
-import androidx.ui.tooling.preview.Preview
-import androidx.ui.unit.dp
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import br.com.joaogoes.model.RevisionItemModel
 import br.com.joaogoes.ui.GenericErrorScreen
 import br.com.joaogoes.ui.LoadingScreen
 import br.com.joaogoes.ui.R
 import br.com.joaogoes.ui.home.dialog.ItemDialog
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity() {
 
-    private val viewModel: HomeViewModel by inject()
-    private var state: HomeViewState? = null
+    private val viewModel: HomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
-            val dialogState = state { false }
-            MaterialTheme(
-                colors = lightColorPalette(
-                    primary = Color(255, 23,68),
-                    primaryVariant = Color(255, 97, 111),
-                    secondary = Color(196, 0,29)
-                )
-            ) {
-                Scaffold(
-                    floatingActionButton = {
-                        FloatingActionButton(
-                            onClick = {
-                                dialogState.value = true
-                            }
-                        ) {
-                            Icon(imageResource(R.drawable.ic_plus))
+            Screen(viewModel = viewModel)
+        }
+    }
+
+
+    @Composable
+    fun Screen(viewModel: HomeViewModel) {
+        val screenState = viewModel.viewState.observeAsState()
+        val dialogState = mutableStateOf(false)
+
+        MaterialTheme(
+            colors = lightColors(
+                primary = Color(255, 23, 68),
+                primaryVariant = Color(255, 97, 111),
+                secondary = Color(196, 0, 29)
+            )
+        ) {
+            Scaffold(
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = {
+                            dialogState.value = true
                         }
-                    },
-                    topAppBar = {
-                        TopAppBar(
-                            title = {
-                                Text(getString(R.string.app_name))
-                            }
-                        )
-                    },
-                    bodyContent = {
-                        if (dialogState.value) {
-                            ItemDialog(
-                                context = applicationContext,
-                                dismiss = { dialogState.value = false },
-                                action = { item -> viewModel.saveRevision(item) }
-                            )
-                        }
-                        state = observeState<HomeViewState>(viewModel.viewState)
-                        buildLayout(viewState = state)
+                    ) {
+                        Icon(ImageBitmap.imageResource(R.drawable.ic_plus), null)
                     }
-                )
+                },
+                topBar = {
+                    TopAppBar(
+                        title = {
+                            Text(getString(R.string.app_name))
+                        }
+                    )
+                },
+            ) {
+                if (dialogState.value) {
+                    ItemDialog(
+                        context = applicationContext,
+                        dismiss = { dialogState.value = false },
+                        action = { item -> viewModel.saveRevision(item) }
+                    )
+                }
+                BuildLayout(viewState = screenState.value)
             }
         }
     }
 
     @Composable
-    private fun <T> observeState(data: LiveData<T>): T? {
-        val result = state { data.value }
-        val observer = remember { Observer<T> { result.value = it } }
-
-        onCommit(data) {
-            data.observeForever(observer)
-            onDispose { data.removeObserver(observer) }
-        }
-        return result.value
-    }
-
-    @Composable
-    private fun buildLayout(viewState: HomeViewState?) =
+    private fun BuildLayout(viewState: HomeViewState?) =
         when (viewState) {
             is HomeViewState.Loading -> LoadingScreen()
             is HomeViewState.Success -> KilometersScreen(viewState.revisionItems)
@@ -102,42 +93,51 @@ class HomeActivity : AppCompatActivity() {
     @Composable
     fun KilometersScreen(revisionList: List<RevisionItemModel>) =
         Column {
-            VerticalScroller(
+            Column(
                 modifier = Modifier.padding(32.dp)
             ) {
                 Column(
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(getString(R.string.home_activity_maintenance),
+                    Text(
+                        getString(R.string.home_activity_maintenance),
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
                     revisionList.map {
-                        revisionListItem(it)
+                        RevisionListItem(it)
                     }
                 }
             }
         }
 
     @Composable
-    fun revisionListItem(revisionItem: RevisionItemModel) {
+    fun RevisionListItem(revisionItem: RevisionItemModel) {
         Box(
-            modifier = Modifier.padding(
-                top = 4.dp,
-                bottom = 4.dp
-            ).fillMaxWidth(),
-            backgroundColor = Color.White,
-            shape = RoundedCornerShape(16.dp),
-            border = Border(1.dp, SolidColor(Color.Gray))
+//            modifier = Modifier.padding(
+//                top = 4.dp,
+//                bottom = 4.dp
+//            ).fillMaxWidth(),
+            Modifier.background(
+                SolidColor(Color.White),
+                shape = RoundedCornerShape(16.dp)
+            )
         ) {
             Row(
-                modifier = Modifier.padding(top = 4.dp, bottom = 4.dp, start = 8.dp, end = 8.dp).fillMaxWidth(),
+                modifier = Modifier
+                    .padding(top = 4.dp, bottom = 4.dp, start = 8.dp, end = 8.dp)
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 with(revisionItem) {
                     Text(itemName)
-                    Row{
-                        Text(getString(R.string.home_activity_kilometer, currentRevisionKilometer))
-                        Image(imageResource(R.drawable.ic_right_arrow))
+                    Row {
+                        Text(
+                            getString(
+                                R.string.home_activity_kilometer,
+                                currentRevisionKilometer
+                            )
+                        )
+                        Image(ImageBitmap.imageResource(R.drawable.ic_right_arrow), null)
                         Text(getString(R.string.home_activity_kilometer, nextRevisionKilometer))
                     }
                 }
@@ -149,7 +149,7 @@ class HomeActivity : AppCompatActivity() {
     @Preview
     @Composable
     fun preview() {
-        revisionListItem(
+        RevisionListItem(
             revisionItem = RevisionItemModel(
                 uid = 0,
                 itemName = "Item teste",
