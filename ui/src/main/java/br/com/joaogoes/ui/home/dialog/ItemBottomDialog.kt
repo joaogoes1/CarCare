@@ -16,6 +16,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+<<<<<<< HEAD
+=======
+import androidx.compose.ui.platform.setContent
+>>>>>>> 31fcd1b7be4a99ec294a42a24c1514f2750a735b
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType

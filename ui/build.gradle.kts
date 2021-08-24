@@ -22,11 +22,16 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        useIR = true
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
+<<<<<<< HEAD
+=======
+        kotlinCompilerVersion = "1.4.21"
+>>>>>>> 31fcd1b7be4a99ec294a42a24c1514f2750a735b
         kotlinCompilerExtensionVersion = Versions.compose
     }
 }
@@ -44,8 +49,11 @@ dependencies {
     implementation(Libs.Ui.tooling)
     implementation(Libs.Ui.livedata)
     implementation(Libs.Ui.runtime)
+<<<<<<< HEAD
     implementation(Libs.Koin.core)
 //    implementation(Libs.Koin.compose)
+=======
+>>>>>>> 31fcd1b7be4a99ec294a42a24c1514f2750a735b
 //    kotlin(Libs.Ui.compiler)
     implementation(project(Modules.core))
 
@@ -54,9 +62,18 @@ dependencies {
     androidTestImplementation(TestLib.espresso)
 }
 
+<<<<<<< HEAD
 //tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 //    kotlinOptions {
 //        jvmTarget = "1.8"
 //        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies")
 //    }
 //}
+=======
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies")
+    }
+}
+>>>>>>> 31fcd1b7be4a99ec294a42a24c1514f2750a735b

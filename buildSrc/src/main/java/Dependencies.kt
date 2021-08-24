@@ -10,9 +10,15 @@ object App {
 
 object Versions {
     const val gradle = "7.0.0-alpha04"
+<<<<<<< HEAD
     const val kotlin = "1.4.32"
     const val appcompat = "1.1.0"
     const val compose = "1.0.0-beta07"
+=======
+    const val kotlin = "1.4.21"
+    const val appcompat = "1.1.0"
+    const val compose = "1.0.0-alpha10"
+>>>>>>> 31fcd1b7be4a99ec294a42a24c1514f2750a735b
     const val material = "1.1.0"
     const val coroutines = "1.3.5"
     const val koin = "3.0.2"
